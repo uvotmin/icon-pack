@@ -5,6 +5,7 @@ import 'package:kuburazizam/wallpapers.dart';
 import 'package:kuburazizam/apply.dart';
 import 'package:kuburazizam/request.dart';
 
+var h="Icon Pack Name";
 void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
@@ -18,7 +19,6 @@ class MyApp extends StatelessWidget {
 
 class MyNavigationBar extends StatefulWidget {
   MyNavigationBar ({Key key}) : super(key: key);
-
   @override
   _MyNavigationBarState createState() => _MyNavigationBarState();
 }
@@ -37,11 +37,44 @@ class _MyNavigationBarState extends State<MyNavigationBar > {
     setState(() {
       _selectedIndex = index;
     });
+    switch (index) {
+      case 0:
+       h = "Icon Pack Name";
+        break;
+      case 1:
+        h = "Icons";
+        break;
+      case 2:
+        h = "Wallpapers";
+        break;
+      case 3:
+        h = "Apply";
+        break;
+      case 4:
+        h = "Request";
+        break;
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: new AppBar(
+        title: new Text('$h', style: TextStyle(color:Colors.white, fontFamily: 'Poppins', fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.black,
+        centerTitle: true,
+        actions:
+        [
+          PopupMenuButton<MenuItem>(
+            color: Colors.grey[900],
+            onSelected: (item) => onSelected(context, item),
+            itemBuilder: (context) => [
+              ...MenuItems.itemsFirst.map(buildItem).toList(),
+            ],
+          ),
+        ],
+      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -97,4 +130,44 @@ class _MyNavigationBarState extends State<MyNavigationBar > {
       ),
     );
   }
-}  
+}
+class MenuItem {
+  final String text;
+
+  const MenuItem({
+    this.text,
+  });
+}
+
+class MenuItems {
+  static const List<MenuItem> itemsFirst = [
+    itemSettings,
+    itemContact,
+  ];
+  static const itemSettings = MenuItem(
+    text: "Settings",);
+  static const itemContact=MenuItem(
+    text: 'Contact us',
+  );
+}
+
+PopupMenuItem<MenuItem> buildItem(MenuItem item) =>
+    PopupMenuItem<MenuItem>(
+      value: item,
+      child: Row(
+        children: [
+          const SizedBox(width: 12),
+          Text(item.text),
+        ],
+      ),
+    );
+void onSelected(BuildContext context, MenuItem item) {
+  switch (item) {
+    case MenuItems.itemSettings:
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context)=>Settings()),
+      );
+      break;
+  }
+}
+

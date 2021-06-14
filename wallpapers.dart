@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+//import 'package:wallpaperplugin/wallpaperplugin.dart';
+
 var imgn;
 class Wallpapers extends StatefulWidget {
   @override
@@ -10,37 +12,6 @@ class Wallpapers extends StatefulWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-          title: const Text('Wallpapers', style: TextStyle(color: Colors.white,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.bold)),
-          backgroundColor: Colors.black,
-          centerTitle: true,
-          actions:
-          [
-            IconButton(icon: Icon(Icons.search, color: Colors.white,),
-                onPressed: () {}),
-            PopupMenuButton<String>(
-              color: Colors.grey[900],
-              onSelected: (value) {
-                print(value);
-              },
-              itemBuilder: (BuildContext context) {
-                return [
-                  PopupMenuItem(
-                    child: Text(
-                        "Settings",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Poppins',
-                        )
-                    ),
-                    value: "Settings",
-                  ),
-                ];
-              },)
-          ]
-      ),
       body: Container(
           padding: EdgeInsets.all(18.0),
           child: GridView.count(
@@ -72,7 +43,18 @@ class Wallpapers extends StatefulWidget {
                       fit: BoxFit.cover,
                     ) ),
               ),
-
+              GestureDetector(
+                onTap: () {
+                  imgn=3;
+                  Navigator.of(context).push(_createRoute());
+                },
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(18),
+                    child: Image.asset(
+                      'img/img3.jpg',
+                      fit: BoxFit.cover,
+                    ) ),
+              ),
             ],
           )
     ));
@@ -99,18 +81,28 @@ Route _createRoute() {
 
 class ImageView extends StatelessWidget{
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-            title: Text('Wallpaper $imgn', style: TextStyle(color: Colors.white,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.bold)),
-            backgroundColor: Colors.transparent,
-            centerTitle: true,
-        ),
-      body: Center(
-        child: Image.asset('img/img$imgn.jpg'),
-      ),
-        );
-  }
+  Widget build(BuildContext context) => Scaffold(
+    extendBodyBehindAppBar: true,
+    appBar: AppBar(
+      centerTitle: true,
+      title: Text('Wallpaper $imgn',
+        style: TextStyle(
+        color: Colors.white,
+        fontFamily: 'Poppins',
+        fontSize: 22,
+          fontWeight: FontWeight.bold
+      )),
+      leading: BackButton(),
+      backgroundColor: Colors.transparent, // Colors.white.withOpacity(0.1),
+      elevation: 0,
+    ),
+    body: Image.asset(
+      'img/img$imgn.jpg',
+      fit: BoxFit.cover,
+      width: double.infinity,
+      height: double.infinity,
+    ),
+  );
 }
+
+

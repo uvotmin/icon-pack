@@ -1,5 +1,26 @@
 import 'package:flutter/material.dart';
 
+class Settings extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    extendBodyBehindAppBar: true,
+    appBar: AppBar(
+      centerTitle: true,
+      title: Text('Settings',
+          style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'Poppins',
+              fontSize: 22,
+              fontWeight: FontWeight.bold
+          )),
+      leading: BackButton(),
+      backgroundColor: Colors.transparent, // Colors.white.withOpacity(0.1),
+      elevation: 0,
+    ),
+    backgroundColor: Colors.black,
+  );
+}
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -10,35 +31,8 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return new Scaffold(
         backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: const Text('Kuburazizam', style: TextStyle(color:Colors.white, fontFamily: 'Poppins', fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.black,
-        centerTitle: true,
-        actions: [
-          PopupMenuButton<String>(
-          color: Colors.grey[900],
-          onSelected: (value) {
-            print(value);
-            },
-          itemBuilder: (BuildContext context) {
-    return [
-      PopupMenuItem(
-    child: Text(
-        "Settings",
-    style: TextStyle(
-      color: Colors.white,
-      fontFamily: 'Poppins',
-    )
-    ),
-    value: "Settings",
-    ),
-    ];
-    },)
-    ]
-      ),
         body: new Center(
          child: Column(
-
            children: <Widget>[
              Container(padding: EdgeInsets.only(bottom: 30.0),
              child: new Image.asset(
@@ -117,3 +111,4 @@ class _HomeState extends State<Home> {
           );
   }
 }
+
